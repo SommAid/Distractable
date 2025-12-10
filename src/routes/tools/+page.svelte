@@ -74,7 +74,7 @@
       </a>
 
       <!-- Sample Final Card For Demo Only -->
-      <a href="/"
+      <a href="/tools"
         class="bg-gray-500/10 hover:bg-gray-500/20 aspect-square rounded-2xl border border-white/5 flex flex-col items-center justify-center gap-3 transition-all active:scale-95 group"
       >
         <div class="group-hover:scale-110 transition-transform duration-300">
