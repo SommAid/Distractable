@@ -1,98 +1,87 @@
-<script lang="ts">
+<script>
   import { scale } from 'svelte/transition';
   import { Smartphone, Zap, RotateCcw, Frown } from 'lucide-svelte';
 
-  // Game State
-  type GameState = 'start' | 'waiting' | 'action' | 'success' | 'gameover';
-  let gameState: GameState = 'start';
-  let score = 0;
-  let highScore = 23;
-  let currentCommand: 'tap' | 'flip' | null = null;
-  
+  let gameState = "start"
+  let score = 0
+  let highScore = 15
+  let currentCommand = null
+
   // Timers
-  let actionTimer: any;
-  let gameLoopTimeout: any;
+  let actionTimer
+  let gameLoopTimeout
 
   // Visuals
-  let isShaking = false;
+  let isShaking = false
 
   function startGame() {
-    score = 0;
-    gameState = 'waiting';
-    nextRound();
+    score = 0
+    gameState = "waiting"
+    nextRound()
   }
 
   function nextRound() {
-    // 1. Reset
-    currentCommand = null;
-    isShaking = false;
-    gameState = 'waiting';
+    // Reset
+    currentCommand = null
+    isShaking = false
+    gameState = "waiting"
 
-    // 2. Random delay before action (1s to 3s)
-    const delay = Math.random() * 2000 + 1000;
-    
+    // Random delay before action (1s to 2s)
+    const delay = Math.random() * 1000 + 1000
+
     gameLoopTimeout = setTimeout(() => {
-      triggerAction();
-    }, delay);
+      triggerAction()
+    }, delay)
   }
 
   function triggerAction() {
-    gameState = 'action';
-    
-    // Randomly choose command
-    currentCommand = Math.random() > 0.5 ? 'tap' : 'flip';
-    isShaking = true;
+    gameState = "action"
 
-    // SIMULATE HAPTICS (If supported on mobile)
-    if (typeof navigator !== 'undefined' && navigator.vibrate) {
-        if (currentCommand === 'tap') navigator.vibrate(100); // Short buzz
-        else navigator.vibrate(1000); // Long buzz
+    // Choose Command
+    currentCommand = Math.random() > 0.5 ? "tap" : "flip"
+    isShaking = true
+
+    if (typeof navigator !== "undefined" && navigator.vibrate) {
+      if (currentCommand === "tap") navigator.vibrate(100) // Short buzz
+      else navigator.vibrate(1000) // Long buzz
     }
 
-    // Time limit gets shorter as score increases
-    const timeLimit = Math.max(800, 2000 - (score * 100));
+    const timeLimit = Math.max(800, 2000 - score * 100)
 
     actionTimer = setTimeout(() => {
-      endGame();
-    }, timeLimit);
+      endGame()
+    }, timeLimit)
   }
 
-  function handleInput(type: 'tap' | 'flip') {
-    if (gameState !== 'action') return;
+  function handleInput(type) {
+    if (gameState !== "action") return
 
     if (type === currentCommand) {
-      // Success
-      clearTimeout(actionTimer);
-      gameState = 'success';
-      score++;
-      if (score > highScore) highScore = score;
-      
-      // Brief pause before next round
-      setTimeout(() => nextRound(), 500);
+      clearTimeout(actionTimer)
+      gameState = "success"
+      score++
+      if (score > highScore) highScore = score
+
+      setTimeout(() => nextRound(), 500)
     } else {
-      // Wrong input
-      endGame();
+      endGame()
     }
   }
 
   function endGame() {
-    clearTimeout(actionTimer);
-    clearTimeout(gameLoopTimeout);
-    isShaking = false;
-    gameState = 'gameover';
-    
-    // Error Haptic
-    if (typeof navigator !== 'undefined' && navigator.vibrate) {
-        navigator.vibrate([100, 50, 100]); 
+    clearTimeout(actionTimer)
+    clearTimeout(gameLoopTimeout)
+    isShaking = false
+    gameState = "gameover"
+
+    if (typeof navigator !== "undefined" && navigator.vibrate) {
+      navigator.vibrate([100, 50, 100])
     }
   }
 </script>
 
 <div class="w-full h-screen bg-slate-900 text-slate-100 font-sans flex flex-col relative overflow-hidden select-none">
-  <!-- SIMULATION ZONES (Only visible/active during game) -->
   {#if gameState === 'waiting' || gameState === 'action' || gameState === 'success'}
-    <!-- Top Right: FLIP ZONE -->
-    <!-- svelte-ignore a11y-click-events-have-key-events -->
     <div 
       on:click={() => handleInput('flip')}
       class="absolute top-0 right-0 w-1/2 h-1/3 z-20 flex justify-end items-start p-6
@@ -104,8 +93,6 @@
       </span>
     </div>
 
-    <!-- Bottom Left: TAP ZONE -->
-    <!-- svelte-ignore a11y-click-events-have-key-events -->
     <div 
       on:click={() => handleInput('tap')}
       class="absolute bottom-0 left-0 w-1/2 h-1/3 z-20 flex justify-start items-end p-6
@@ -118,10 +105,8 @@
     </div>
   {/if}
 
-  <!-- Main Game Display -->
   <div class="flex-1 flex flex-col items-center justify-center p-8 z-10 pointer-events-none">
     
-    <!-- START SCREEN -->
     {#if gameState === 'start'}
       <div in:scale class="text-center space-y-8 pointer-events-auto">
         <div class="relative inline-block">
@@ -151,13 +136,10 @@
         </button>
       </div>
 
-    <!-- PLAYING SCREEN -->
     {:else if gameState !== 'gameover'}
       <div class="text-center space-y-12">
-        <!-- Score -->
         <div class="text-8xl font-black text-slate-800">{score}</div>
 
-        <!-- Indicator -->
         <div class="relative h-32 flex items-center justify-center">
             {#if gameState === 'waiting'}
                 <div class="text-slate-500 animate-pulse text-sm font-medium tracking-widest">WAIT FOR IT...</div>

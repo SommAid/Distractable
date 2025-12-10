@@ -1,11 +1,10 @@
-<script lang="js">
+<script>
   import { onMount } from 'svelte';
   import { fly } from 'svelte/transition';
   import { MousePointerClick } from 'lucide-svelte';
 
-  // Switch Tool State
   let switchOn = false;
-  let showHint = true; // Hint visibility control
+  let showHint = true;
 
   // Hide hint visibility after 2 seconds
   onMount(() => {
@@ -13,7 +12,7 @@
       showHint = false;
     }, 2000);
 
-    return () => clearTimeout(timer); // Cleanup component
+    return () => clearTimeout(timer);
   });
 </script>
 

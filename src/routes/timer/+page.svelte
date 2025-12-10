@@ -1,88 +1,82 @@
-<script lang="ts">
+<script >
   import { onDestroy } from 'svelte';
   import { Play, Pause, RotateCcw } from 'lucide-svelte';
   import { scale } from 'svelte/transition';
 
   // State
-  let timeLeft = 60 * 5; // Default 5 mins
-  let initialTime = 0;
-  let isActive = false;
-  let interval: any;
+  let timeLeft = 60 * 5 
+  let initialTime = 0
+  let isActive = false
+  let interval
 
   // Formatting
-  $: minutes = Math.floor(timeLeft / 60);
-  $: seconds = timeLeft % 60;
-  $: formattedTime = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-  
+  $: minutes = Math.floor(timeLeft / 60)
+  $: seconds = timeLeft % 60
+  $: formattedTime = `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`
+
   // Progress Ring Calc
   // r=125 = circumference ~ 786
-
-  $: progress = initialTime > 0 ? ((initialTime - timeLeft) / initialTime) * 100 : 0;
-  $: dashOffset = 786 - (786 * progress) / 100; // Inverse for countdown style
+  $: progress =
+    initialTime > 0 ? ((initialTime - timeLeft) / initialTime) * 100 : 0
+  $: dashOffset = 786 - (786 * progress) / 100 
 
   function toggleTimer() {
     if (isActive) {
-      pauseTimer();
+      pauseTimer()
     } else {
-      startTimer();
+      startTimer()
     }
   }
 
   function startTimer() {
-    if (timeLeft === 0) return;
-    isActive = true;
+    if (timeLeft === 0) return
+    isActive = true
     interval = setInterval(() => {
       if (timeLeft > 0) {
-        timeLeft -= 1;
+        timeLeft -= 1
       } else {
-        completeTimer();
+        completeTimer()
       }
-    }, 1000);
+    }, 1000)
   }
 
   function pauseTimer() {
-    isActive = false;
-    clearInterval(interval);
+    isActive = false
+    clearInterval(interval)
   }
 
   function resetTimer() {
-    pauseTimer();
-    initialTime = 0;
-    timeLeft = initialTime;
+    pauseTimer()
+    initialTime = 0
+    timeLeft = initialTime
   }
 
-  function setTime(mins: number) {
-    pauseTimer();
-    initialTime += mins * 60;
-    initialTime = initialTime > 0 ? initialTime : 0;
-    timeLeft = initialTime;
+  function setTime(mins) {
+    pauseTimer()
+    initialTime += mins * 60
+    initialTime = initialTime > 0 ? initialTime : 0
+    timeLeft = initialTime
   }
 
   function completeTimer() {
-    pauseTimer();
-    // Vibrate to signal end
-    if (typeof navigator !== 'undefined' && navigator.vibrate) {
-        navigator.vibrate([200, 100, 200]);
+    pauseTimer()
+    if (typeof navigator !== "undefined" && navigator.vibrate) {
+      navigator.vibrate([200, 100, 200])
     }
   }
 
   onDestroy(() => {
-    if (interval) clearInterval(interval);
-  });
+    if (interval) clearInterval(interval)
+  })
 </script>
 
 <div class="w-full h-screen bg-slate-900 text-slate-100 flex flex-col relative overflow-hidden">
     <div class="flex-1 flex flex-col items-center justify-center space-y-12">
       
-      <!-- Timer Display -->
       <div class="relative w-72 h-72 flex items-center justify-center" in:scale>
-        <!-- Background Ring -->
         <svg class="w-full h-full transform -rotate-90 drop-shadow-2xl">
-            <!-- Track -->
             <circle cx="50%" cy="50%" r="125" class="stroke-slate-800" stroke-width="8" fill="transparent" />
-            
-            <!-- Progress -->
-            <circle 
+              <circle 
                 cx="50%" cy="50%" r="125" 
                 class="stroke-pink-500 transition-all duration-1000 ease-linear {timeLeft === 0 ? 'stroke-emerald-400' : ''}"
                 stroke-width="8" 
@@ -112,7 +106,6 @@
 
       <!-- Controls -->
       <div class="flex flex-col items-center gap-8 w-full px-8">
-        
         <!-- Main Buttons -->
         <div class="flex gap-6 items-center">
             <button 

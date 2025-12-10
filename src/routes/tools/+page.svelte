@@ -1,4 +1,4 @@
-<script lang="ts">
+<script>
   import { fade } from 'svelte/transition';
   import { Wind, ToggleLeft, Grid3x3, Timer, Blend, Fan, Shell } from 'lucide-svelte';
 </script>

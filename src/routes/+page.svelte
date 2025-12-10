@@ -1,4 +1,4 @@
-<script lang="ts">
+<script>
   import { fade } from 'svelte/transition';
   import { Wind, ToggleLeft, Grid3x3, Flame, Blend, Fan, Shell } from 'lucide-svelte';
 </script>
@@ -8,7 +8,7 @@
   <!-- Dashboard -->
   <div in:fade={{ duration: 300 }} class="p-6 space-y-8">
     <div class="space-y-2">
-      <h2 class="text-2xl font-semibold text-white">Recently Played</h2>
+      <h2 class="text-2xl font-semibold text-white">Play Again:</h2>
     </div>
 
     <div class="grid grid-cols-2 gap-4">

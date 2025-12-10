@@ -1,13 +1,13 @@
-<script lang="ts">
+<script>
   import { scale } from 'svelte/transition';
   import { } from 'lucide-svelte';
     
   let breathingState = 'Inhale';
   let breatheScale = 1.5;
-  let breatheInterval: any;
+  let breatheInterval
 
   function startBreathing() {
-    // Simple oscillation logic
+    // Oscillation
     breatheInterval = setInterval(() => {
         if (breathingState === 'Inhale') {
             breathingState = 'Exhale';

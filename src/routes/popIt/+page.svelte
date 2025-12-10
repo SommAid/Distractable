@@ -1,9 +1,9 @@
-<script lang="ts">
+<script>
   import { fly } from 'svelte/transition';
 
   // Pop Tool State
   let popped = new Array(16).fill(false);
-  function togglePop(index: number) {
+  function togglePop(index) {
       popped[index] = !popped[index];
   }
   function resetPop() {

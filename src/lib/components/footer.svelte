@@ -1,10 +1,10 @@
-<script lang="ts">
+<script>
   import { Vibrate, VibrateOff, Grid3x3, House, Volume2, VolumeOff } from 'lucide-svelte';
 
   let isVibrateOn = true;
   let isSoundOn = true;
 
-  // toggle functions
+  // toggle fx
   function toggleVibrate() {
     isVibrateOn = !isVibrateOn;
   }
@@ -14,6 +14,7 @@
   }
 </script>
 
+<!-- Footer -->
 <footer class="h-20 bg-slate-900 border-t border-slate-800 grid grid-cols-4 items-center pb-2 z-10">
   <a 
     href="/" 

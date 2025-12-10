@@ -1,4 +1,4 @@
-<script lang="js">
+<script>
   import { fade, slide } from 'svelte/transition';
   import { Settings, Volume2, Smartphone, Grid3x3, ToggleLeft, Wind, Zap, Activity } from 'lucide-svelte';
   
@@ -136,7 +136,6 @@
        >
           Reset All Statistics
        </button>
-       <p class="mt-4 text-[10px] text-slate-600">v1.0.0 • Fidgetly Mobile</p>
     </div>
 
   </div>
