@@ -80,7 +80,7 @@
         <div class="group-hover:scale-110 transition-transform duration-300">
             <Shell size={32} class="text-gray-400" />
         </div>
-        <span class="font-medium text-slate-200">6th card is max (Demo Only)</span>
+        <span class="font-medium text-slate-200">Placeholder (Demo Only)</span>
       </a>
     </div>
   </div>
