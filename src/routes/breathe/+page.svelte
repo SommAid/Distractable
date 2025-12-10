@@ -2,7 +2,6 @@
   import { scale } from 'svelte/transition';
   import { } from 'lucide-svelte';
     
-  // Breathing Tool State
   let breathingState = 'Inhale';
   let breatheScale = 1.5;
   let breatheInterval: any;
